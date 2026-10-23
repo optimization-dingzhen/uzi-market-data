@@ -8,6 +8,7 @@ on:
       - '.github/workflows/publish-okx.yml'
       - 'scripts/publish_okx.py'
       - 'tests/test_okx.py'
+      - 'data/refresh-request.txt'
   schedule:
     # Request at minutes 2,7,12... to avoid top-of-hour load. GitHub may delay/skip jobs.
     - cron: '2-59/5 * * * *'
