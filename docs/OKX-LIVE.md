@@ -21,6 +21,21 @@ Paste this text into your ChatGPT project's instructions to prioritize the new s
 
 > For a request to analyze SOXLUSDT, first use the connected GitHub app to read `optimization-dingzhen/uzi-market-data` at `data/OKX-SOXL-USDT-SWAP.json`. This is an **OKX** SOXL-USDT-SWAP market snapshot, not Binance data. Verify `exchange`, `symbol`, `status`, last/mark quote times and age against current UTC. If either quote is older than 15 minutes, report it as stale and do not give precise live trade entry signals. Base primary trend on UTC 1d and swing structure on 4h using confirmed candles; show OKX OI/funding with their exchange attribution. If the live JSON is unavailable or stale, read `data/SOXLUSDT-historical.json` as explicitly delayed Binance history only, and do not label its close as current. US stock SOXL, US options max pain, and Binance funding/OI must be verified separately, with missing fields called out.
 
+## On-demand refresh from ChatGPT Web
+
+GitHub scheduled jobs are **best-effort**; this project cannot guarantee a new quote every five minutes. There is also a one-shot push-based trigger supported by `.github/workflows/publish-okx.yml`:
+
+1. Read `data/OKX-SOXL-USDT-SWAP.json` with the connected GitHub app and check current UTC against both quote timestamps.
+2. If either quote is older than 15 minutes **and repository write access is authorized**, update `data/refresh-request.txt` with a new `request_utc=<current UTC ISO-8601>` line via GitHub update_file (preserving the current file SHA). This causes the OKX publisher's **push** workflow to run.
+3. Check the latest Actions run for the push commit; do not consider it successful until the run finishes with `conclusion=success`.
+4. Re-read the JSON and re-check both market quote timestamps against the new current UTC. If still older than 15 minutes, unavailable or provenance is mismatched, fail closed and use delayed Binance history only.
+
+Each request causes a small GitHub commit. This is a *user-initiated near-live refresh*, NOT streaming tick data and not a guarantee of bounded API latency. Never edit broker/OKX accounts or place orders.
+
+To use this without manually opening Codex or GitHub, include this supplemental ChatGPT project instruction:
+
+> When an OKX SOXL-USDT-SWAP GitHub snapshot is stale, use the connected GitHub connector (if authorized to write) to update `data/refresh-request.txt` with a new UTC timestamp, monitor the resulting `Publish verified OKX SOXL-USDT-SWAP public snapshot` run, and read the new `data/OKX-SOXL-USDT-SWAP.json` only after the action succeeds. Validate fresh last/mark timestamps again; if unavailable, declare stale and fall back to delayed Binance history. Do not claim that writing the refresh request itself made quotes fresh.
+
 ## Endpoint catalog
 
 - `/api/v5/public/instruments?instType=SWAP&instId=SOXL-USDT-SWAP`
