@@ -1,0 +1,64 @@
+name: Probe OKX SOXL-USDT-SWAP public APIs (read-only)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/okx-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Probe region-appropriate OKX public market endpoints (GET only)
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, urllib.request, urllib.parse, urllib.error, socket
+          from datetime import datetime, timezone
+
+          # GitHub-hosted runner usually exits from the United States.
+          # OKX documents us.okx.com for US/AU API access.
+          # Do not retry on regional restrictions through another location.
+          base = "https://us.okx.com"
+          inst = "SOXL-USDT-SWAP"
+          queries = [
+              ("instrument", "/api/v5/public/instruments", {"instType":"SWAP","instId":inst}),
+              ("ticker", "/api/v5/market/ticker", {"instId":inst}),
+              ("candles_4h", "/api/v5/market/candles", {"instId":inst,"bar":"4H","limit":"5"}),
+              ("candles_1d", "/api/v5/market/candles", {"instId":inst,"bar":"1Dutc","limit":"5"}),
+              ("open_interest", "/api/v5/public/open-interest", {"instType":"SWAP","instId":inst}),
+              ("funding_rate", "/api/v5/public/funding-rate", {"instId":inst}),
+              ("mark_price", "/api/v5/public/mark-price", {"instType":"SWAP","instId":inst})
+          ]
+          print("PROBE_UTC", datetime.now(timezone.utc).isoformat())
+          print("EXCHANGE", "OKX", "SYMBOL", inst, "API_BASE", base)
+          try:
+              ips = sorted({r[4][0] for r in socket.getaddrinfo("us.okx.com",443)})
+              print("DNS_OK",bool(ips))
+          except Exception as e:
+              print("DNS_ERROR",type(e).__name__,str(e)[:160])
+          for name,path,params in queries:
+              url=base+path+"?"+urllib.parse.urlencode(params)
+              try:
+                  request=urllib.request.Request(url,headers={"User-Agent":"UZI-Market-Relay/OKX-probe/1.0","Accept":"application/json"})
+                  with urllib.request.urlopen(request,timeout=10) as response:
+                      raw=response.read(1000000)
+                      status=response.status
+                  body=json.loads(raw)
+                  data=body.get("data",[]) if isinstance(body,dict) else []
+                  print("RESULT",name,"HTTP",status,"code",body.get("code"),"count",len(data),
+                        "instId",data[0].get("instId") if data and isinstance(data[0],dict) else None,
+                        "ts",data[0].get("ts") if data and isinstance(data[0],dict) else (data[0][0] if data and isinstance(data[0],list) else None),
+                        "state",data[0].get("state") if data and isinstance(data[0],dict) else None,
+                        "msg",str(body.get("msg",""))[:100])
+              except urllib.error.HTTPError as e:
+                  print("HTTP_ERROR",name,e.code, e.reason)
+              except Exception as e:
+                  print("ERROR",name,type(e).__name__,str(e)[:160])
+          PY
