@@ -1,0 +1,47 @@
+name: Publish SOXLUSDT public-market snapshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every 5 min in UTC; actual execution can be delayed by GitHub Actions.
+    - cron: '3/5 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: soxlusdt-market-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Offline regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Diagnose public Binance endpoint
+        run: python scripts/analyze_futures.py --diagnose
+      - name: Fetch read-only market snapshot and compute 1d/4h indicators
+        run: python scripts/publish_snapshot.py --symbol SOXLUSDT --output data/SOXLUSDT.json
+      - name: Verify published snapshot freshness and 1d/4h readiness
+        run: python scripts/verify_relay.py --file data/SOXLUSDT.json
+      - name: Publish JSON to same repository (no secrets)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/SOXLUSDT.json
+          if git diff --cached --quiet; then
+            echo 'No changes'
+          else
+            git commit -m 'market: update SOXLUSDT public-data snapshot'
+            git push
+          fi
