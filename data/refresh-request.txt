@@ -1,4 +1,4 @@
 Refresh OKX SOXL-USDT-SWAP snapshot for ChatGPT Web
-request_utc=2026-10-23T04:18:24.510Z
-reason=verify-on-demand-trigger
+request_utc=2026-10-23T04:42:05.832Z
+reason=stale-quote-over-15-min
 source=chatgpt-web
