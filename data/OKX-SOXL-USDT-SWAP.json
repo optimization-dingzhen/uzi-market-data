@@ -1,0 +1,114 @@
+{
+  "schema": "uzi.okx.soxl.swap.v1",
+  "exchange": "OKX",
+  "symbol": "SOXL-USDT-SWAP",
+  "market_type": "USDT-margined equity-linked perpetual SWAP, not Binance futures or SOXL ETF shares",
+  "generated_at_utc": "2026-10-23T03:42:18+00:00",
+  "status": "live_verified_quotes",
+  "source": {
+    "api_base": "https://us.okx.com",
+    "endpoints": {
+      "instrument": "https://us.okx.com/api/v5/public/instruments",
+      "ticker": "https://us.okx.com/api/v5/market/ticker",
+      "mark_price": "https://us.okx.com/api/v5/public/mark-price",
+      "open_interest": "https://us.okx.com/api/v5/public/open-interest",
+      "funding_rate": "https://us.okx.com/api/v5/public/funding-rate",
+      "candles_4h": "https://us.okx.com/api/v5/market/candles",
+      "candles_1d": "https://us.okx.com/api/v5/market/candles"
+    },
+    "api": "OKX public REST V5",
+    "authenticated": false
+  },
+  "instrument": {
+    "state": "live",
+    "settleCcy": "USDT",
+    "ctVal": "1",
+    "ctValCcy": "SOXL"
+  },
+  "market": {
+    "last_price_usdt": 84.36,
+    "mark_price_usdt": 84.38,
+    "bid_usdt": 84.36,
+    "ask_usdt": 84.37,
+    "spread_bps": 1.19,
+    "last_quote_time_utc": "2026-10-23T03:42:17+00:00",
+    "mark_quote_time_utc": "2026-10-23T03:42:18+00:00",
+    "last_quote_age_minutes": 0.02,
+    "mark_quote_age_minutes": 0.01,
+    "high_24h": 95.61,
+    "low_24h": 77.99,
+    "base_volume_24h": 8228112.51,
+    "contracts_volume_24h": 8228112.51
+  },
+  "derivatives": {
+    "oi_contracts": 702018.2299999999,
+    "oi_base_equivalent": 702018.2299999999,
+    "oi_usd": 59285439.523499995,
+    "oi_as_of_utc": "2026-10-23T03:42:18+00:00",
+    "oi_change_4h_pct": null,
+    "oi_change_1d_pct": null,
+    "funding_rate_pct": 0.037608,
+    "funding_api_record_utc": "2026-10-23T03:39:27+00:00",
+    "funding_time_utc": "2026-10-23T08:00:00+00:00",
+    "next_funding_time_utc": "2026-10-23T16:00:00+00:00"
+  },
+  "technical": {
+    "4h": {
+      "timeframe": "4h",
+      "ohlc_source": "OKX trade candles, confirmed closes only",
+      "bar_timezone": "UTC",
+      "bar_count": 119,
+      "last_closed_bar_open_utc": "2026-10-22T20:00:00+00:00",
+      "last_closed_bar_end_utc": "2026-10-22T23:59:59+00:00",
+      "last_close": 80.78,
+      "ema20": 94.69913,
+      "ema50": 102.62579,
+      "rsi14": 26.82,
+      "atr14": 4.78437,
+      "bollinger20": {
+        "mid": 96.8225,
+        "upper": 110.9016,
+        "lower": 82.7434
+      },
+      "recent20_high": 106.94,
+      "recent20_low": 80.12,
+      "trend": "down",
+      "bar_age_minutes": 222.32
+    },
+    "1d": {
+      "timeframe": "1d",
+      "ohlc_source": "OKX trade candles, confirmed closes only",
+      "bar_timezone": "UTC",
+      "bar_count": 119,
+      "last_closed_bar_open_utc": "2026-10-22T00:00:00+00:00",
+      "last_closed_bar_end_utc": "2026-10-22T23:59:59+00:00",
+      "last_close": 80.78,
+      "ema20": 115.37565,
+      "ema50": 126.97141,
+      "rsi14": 27.45,
+      "atr14": 12.44945,
+      "bollinger20": {
+        "mid": 125.654,
+        "upper": 182.61303,
+        "lower": 68.69497
+      },
+      "recent20_high": 169.81,
+      "recent20_low": 80.12,
+      "trend": "down",
+      "bar_age_minutes": 222.32
+    }
+  },
+  "oi_history": [
+    {
+      "ts_ms": 1792726938263,
+      "oi_usd": 59285439.52
+    }
+  ],
+  "warnings": [],
+  "not_provided": [
+    "Binance SOXLUSDT live price/mark/funding/OI",
+    "US-listed SOXL options chain/max pain",
+    "live US SOXL ETF price"
+  ],
+  "scope": "Read-only near-real-time OKX public quotes; may lag scheduled GitHub Actions. No trade signals without fresh validation."
+}
