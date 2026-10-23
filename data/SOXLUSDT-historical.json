@@ -1,0 +1,76 @@
+{
+  "schema": "uzi-market-archive-v1",
+  "symbol": "SOXLUSDT",
+  "product": "Binance USD-M Futures",
+  "source": "Binance Vision official futures UM historical Kline CSV archives",
+  "source_archive_root": "https://data.binance.vision/data/futures/um",
+  "generated_at_utc": "2026-10-23T03:35:35+00:00",
+  "is_realtime": false,
+  "is_archived_lagged_ohlcv": true,
+  "status": "historical_only_no_trading_signal",
+  "analysis": {
+    "technical": {
+      "1d": {
+        "available": true,
+        "interval": "1d",
+        "bars": 82,
+        "last_closed_bar_open_utc": "2026-10-21T00:00:00+00:00",
+        "last_closed_bar_end_utc": "2026-10-21T23:59:59+00:00",
+        "last_close_usdt": 98.71,
+        "last_bar_high_usdt": 106.91,
+        "last_bar_low_usdt": 98.28,
+        "ema20": 118.98952,
+        "ema50": 127.73227,
+        "rsi14": 34.06,
+        "atr14": 11.89627,
+        "recent20_high_usdt": 169.82,
+        "recent20_low_usdt": 86.73,
+        "trend": "down",
+        "age_minutes": 1655.71
+      },
+      "4h": {
+        "available": true,
+        "interval": "4h",
+        "bars": 492,
+        "last_closed_bar_open_utc": "2026-10-21T20:00:00+00:00",
+        "last_closed_bar_end_utc": "2026-10-21T23:59:59+00:00",
+        "last_close_usdt": 98.71,
+        "last_bar_high_usdt": 104.52,
+        "last_bar_low_usdt": 98.28,
+        "ema20": 100.68577,
+        "ema50": 106.14644,
+        "rsi14": 46.03,
+        "atr14": 4.59417,
+        "recent20_high_usdt": 106.91,
+        "recent20_low_usdt": 88.47,
+        "trend": "down",
+        "age_minutes": 1655.82
+      }
+    }
+  },
+  "derivatives": {
+    "current_open_interest": null,
+    "funding_rate": null,
+    "mark_price": null
+  },
+  "not_provided": [
+    "live_last_price",
+    "live_mark_price",
+    "live_funding_rate",
+    "current_OI",
+    "options_max_pain"
+  ],
+  "provenance": {
+    "files_count": 46,
+    "last_four_archive_urls": [
+      "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-18.zip",
+      "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-19.zip",
+      "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-20.zip",
+      "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-21.zip"
+    ]
+  },
+  "warnings": [
+    "archive_not_yet_available: 2026-10-22 (1d)",
+    "archive_not_yet_available: 2026-10-22 (4h)"
+  ]
+}
