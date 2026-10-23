@@ -1,0 +1,38 @@
+name: Probe licensed public market-data archive (diagnostic only)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/archive-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check public historical K-line availability (no trading calls)
+        shell: bash
+        run: |
+          python - <<'PY'
+          import urllib.request, urllib.error
+          from datetime import datetime, timezone
+          print("Archive-only diagnostic / no proxy / no region changes")
+          print("Checked at:", datetime.now(timezone.utc).isoformat())
+          for symbol in ("BTCUSDT", "SOXLUSDT"):
+              for interval in ("4h", "1d"):
+                  for day in ("2026-10-20", "2026-10-21"):
+                      url = "https://data.binance.vision/data/futures/um/daily/klines/%s/%s/%s-%s-%s.zip" % (symbol, interval, symbol, interval, day)
+                      try:
+                          req = urllib.request.Request(url, headers={"User-Agent":"UZI-archive-availability-check/1.0"}, method="HEAD")
+                          with urllib.request.urlopen(req, timeout=8) as response:
+                              print(symbol, interval, day, "status", response.status, "bytes",response.headers.get("Content-Length"))
+                      except urllib.error.HTTPError as e:
+                          print(symbol, interval, day, "HTTP",e.code)
+                      except Exception as e:
+                          print(symbol,interval,day,type(e).__name__,str(e)[:180])
+          PY
