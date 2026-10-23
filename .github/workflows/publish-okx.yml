@@ -9,8 +9,8 @@ on:
       - 'scripts/publish_okx.py'
       - 'tests/test_okx.py'
   schedule:
-    # Request every five minutes. GitHub may delay or skip scheduled jobs.
-    - cron: '*/5 * * * *'
+    # Request at minutes 2,7,12... to avoid top-of-hour load. GitHub may delay/skip jobs.
+    - cron: '2-59/5 * * * *'
 
 permissions:
   contents: write
