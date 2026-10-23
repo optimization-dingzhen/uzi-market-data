@@ -2,6 +2,12 @@ name: Publish SOXLUSDT public-market snapshot
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish.yml'
+      - 'scripts/**'
+      - 'tests/**'
   schedule:
     # Every 5 min in UTC; actual execution can be delayed by GitHub Actions.
     - cron: '3/5 * * * *'
