@@ -62,5 +62,18 @@ jobs:
             echo 'No change'
           else
             git commit -m 'market: publish verified OKX SOXL-SWAP snapshot'
-            git push
+            # Repository edits may advance main while this job is running.
+            # Retry only on ordinary non-fast-forward conflicts; never force-push.
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                echo "Published after attempt $attempt"
+                exit 0
+              fi
+              echo "Push conflicted with a newer main commit; retry $attempt/3"
+              sleep 2
+            done
+            echo "Publication failed after three retries" >&2
+            exit 1
           fi
