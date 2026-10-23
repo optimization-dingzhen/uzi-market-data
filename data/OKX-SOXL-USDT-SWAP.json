@@ -3,7 +3,7 @@
   "exchange": "OKX",
   "symbol": "SOXL-USDT-SWAP",
   "market_type": "USDT-margined equity-linked perpetual SWAP, not Binance futures or SOXL ETF shares",
-  "generated_at_utc": "2026-10-23T03:42:18+00:00",
+  "generated_at_utc": "2026-10-23T04:17:18+00:00",
   "status": "live_verified_quotes",
   "source": {
     "api_base": "https://us.okx.com",
@@ -26,29 +26,29 @@
     "ctValCcy": "SOXL"
   },
   "market": {
-    "last_price_usdt": 84.36,
-    "mark_price_usdt": 84.38,
-    "bid_usdt": 84.36,
-    "ask_usdt": 84.37,
-    "spread_bps": 1.19,
-    "last_quote_time_utc": "2026-10-23T03:42:17+00:00",
-    "mark_quote_time_utc": "2026-10-23T03:42:18+00:00",
-    "last_quote_age_minutes": 0.02,
+    "last_price_usdt": 85.1,
+    "mark_price_usdt": 85.21,
+    "bid_usdt": 85.1,
+    "ask_usdt": 85.11,
+    "spread_bps": 1.18,
+    "last_quote_time_utc": "2026-10-23T04:17:16+00:00",
+    "mark_quote_time_utc": "2026-10-23T04:17:18+00:00",
+    "last_quote_age_minutes": 0.05,
     "mark_quote_age_minutes": 0.01,
-    "high_24h": 95.61,
+    "high_24h": 95.48,
     "low_24h": 77.99,
-    "base_volume_24h": 8228112.51,
-    "contracts_volume_24h": 8228112.51
+    "base_volume_24h": 8267274.99,
+    "contracts_volume_24h": 8267274.99
   },
   "derivatives": {
-    "oi_contracts": 702018.2299999999,
-    "oi_base_equivalent": 702018.2299999999,
-    "oi_usd": 59285439.523499995,
-    "oi_as_of_utc": "2026-10-23T03:42:18+00:00",
+    "oi_contracts": 693328.3200000001,
+    "oi_base_equivalent": 693328.3200000001,
+    "oi_usd": 59002240.032000005,
+    "oi_as_of_utc": "2026-10-23T04:17:18+00:00",
     "oi_change_4h_pct": null,
     "oi_change_1d_pct": null,
-    "funding_rate_pct": 0.037608,
-    "funding_api_record_utc": "2026-10-23T03:39:27+00:00",
+    "funding_rate_pct": 0.03828,
+    "funding_api_record_utc": "2026-10-23T04:15:13+00:00",
     "funding_time_utc": "2026-10-23T08:00:00+00:00",
     "next_funding_time_utc": "2026-10-23T16:00:00+00:00"
   },
@@ -58,22 +58,22 @@
       "ohlc_source": "OKX trade candles, confirmed closes only",
       "bar_timezone": "UTC",
       "bar_count": 119,
-      "last_closed_bar_open_utc": "2026-10-22T20:00:00+00:00",
-      "last_closed_bar_end_utc": "2026-10-22T23:59:59+00:00",
-      "last_close": 80.78,
-      "ema20": 94.69913,
-      "ema50": 102.62579,
-      "rsi14": 26.82,
-      "atr14": 4.78437,
+      "last_closed_bar_open_utc": "2026-10-23T00:00:00+00:00",
+      "last_closed_bar_end_utc": "2026-10-23T03:59:59+00:00",
+      "last_close": 85.07,
+      "ema20": 93.78206,
+      "ema50": 101.94371,
+      "rsi14": 35.13,
+      "atr14": 4.96982,
       "bollinger20": {
-        "mid": 96.8225,
-        "upper": 110.9016,
-        "lower": 82.7434
+        "mid": 96.131,
+        "upper": 111.06651,
+        "lower": 81.19549
       },
       "recent20_high": 106.94,
-      "recent20_low": 80.12,
+      "recent20_low": 77.99,
       "trend": "down",
-      "bar_age_minutes": 222.32
+      "bar_age_minutes": 17.32
     },
     "1d": {
       "timeframe": "1d",
@@ -95,13 +95,17 @@
       "recent20_high": 169.81,
       "recent20_low": 80.12,
       "trend": "down",
-      "bar_age_minutes": 222.32
+      "bar_age_minutes": 257.32
     }
   },
   "oi_history": [
     {
       "ts_ms": 1792726938263,
       "oi_usd": 59285439.52
+    },
+    {
+      "ts_ms": 1792729038352,
+      "oi_usd": 59002240.03
     }
   ],
   "warnings": [],
