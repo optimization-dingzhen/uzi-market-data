@@ -72,3 +72,9 @@ required_quote_times、generated_at_utc、status_at_publication，
 - OI 历史或特别费率缺失则留空；股息特别费用不会算作常规 funding。
 - 不传账户信息，不需要模拟盘 API，也不提供下单功能。
 - 该方案并不绕过任何交易所所在地政策；若 Binance 接口在某处不可合法访问，应使用当地合法获许可的数据提供方。
+
+## Verified OKX near-real-time SOXL perpetual data (2026-10-23)
+
+The independent OKX market-data publisher reads `SOXL-USDT-SWAP` (not Binance SOXLUSDT), collects quotes, mark, funding, OI, 4H and UTC 1D candles, and publishes `data/OKX-SOXL-USDT-SWAP.json` on a five-minute requested GitHub Actions schedule. Actual GitHub timing may vary. Readers must check quote ages (<15 minutes) and exchange identity. Do not mistake OKX OI/funding for Binance numbers.
+
+See [OKX live data guide](docs/OKX-LIVE.md) for tested endpoints, regional service conditions and ChatGPT Web project instructions. [Official delayed Binance history](data/SOXLUSDT-historical.json) is preserved as a separate source.

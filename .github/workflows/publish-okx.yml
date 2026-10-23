@@ -1,0 +1,65 @@
+name: Publish verified OKX SOXL-USDT-SWAP public snapshot
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-okx.yml'
+      - 'scripts/publish_okx.py'
+      - 'tests/test_okx.py'
+  schedule:
+    # Request every five minutes. GitHub may delay or skip scheduled jobs.
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-okx-soxl
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run offline regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Fetch read-only OKX contract data and calculate confirmed 1D + 4H indicators
+        run: python scripts/publish_okx.py --output data/OKX-SOXL-USDT-SWAP.json
+      - name: Check identity and freshness of output
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime,timezone
+          path = 'data/OKX-SOXL-USDT-SWAP.json'
+          report = json.load(open(path,encoding='utf-8'))
+          assert report['exchange']=='OKX'
+          assert report['symbol']=='SOXL-USDT-SWAP'
+          assert report['status']=='live_verified_quotes'
+          assert report['market']['last_quote_age_minutes']<=15
+          assert report['market']['mark_quote_age_minutes']<=15
+          assert report['technical']['4h']['bar_count']>=51
+          assert report['technical']['1d']['bar_count']>=51
+          print('Verified OKX quote and 1D/4H data at',datetime.now(timezone.utc).isoformat())
+          PY
+      - name: Publish snapshot to repository (public market data only)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/OKX-SOXL-USDT-SWAP.json
+          if git diff --cached --quiet; then
+            echo 'No change'
+          else
+            git commit -m 'market: publish verified OKX SOXL-SWAP snapshot'
+            git push
+          fi
