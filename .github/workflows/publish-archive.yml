@@ -1,0 +1,60 @@
+name: Publish delayed SOXLUSDT 1D and 4H Binance Vision archive
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/publish_archive.py'
+      - 'tests/test_archive.py'
+      - '.github/workflows/publish-archive.yml'
+  schedule:
+    - cron: '17 6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: soxlusdt-historical-archive
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test archive parser and timestamp validation
+        run: python -m unittest discover -s tests -v
+      - name: Fetch officially published *historical* USD-M klines
+        run: python scripts/publish_archive.py --symbol SOXLUSDT --output data/SOXLUSDT-historical.json
+      - name: Check historical-only flags and daily / 4h availability
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('data/SOXLUSDT-historical.json').read_text())
+          assert a['symbol']=='SOXLUSDT'
+          assert a['is_realtime'] is False
+          assert a['status']=='historical_only_no_trading_signal'
+          for tf in ('1d','4h'):
+              k=a['analysis']['technical'][tf]
+              assert k['available'] and k['bars']>=50
+              print(tf, k['bars'], k['last_closed_bar_end_utc'])
+          PY
+      - name: Commit delayed historical snapshot (no account credentials)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/SOXLUSDT-historical.json
+          if git diff --cached --quiet; then
+            echo 'No changes to publish'
+          else
+            git commit -m 'market: publish delayed SOXLUSDT 1d / 4h archive snapshot'
+            git push
+          fi

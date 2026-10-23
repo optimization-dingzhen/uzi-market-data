@@ -1,3 +1,12 @@
+# UZI Market Relay — current status (2026-10-23)
+
+**Historical data fallback is live as code, but must pass the first real download.**
+GitHub-hosted Binance futures REST returned HTTP 451; the fast REST publisher is manual-only until an authorized provider is connected.
+Use `Publish delayed SOXLUSDT 1D and 4H Binance Vision archive` for officially published *delayed* Klines, scheduled once daily. Its output is `data/SOXLUSDT-historical.json` (NOT real-time and no funding/OI/mark price).
+Do not use an archived candle as a current entry signal. For live data, first verify third-party coverage and licensing for the exact Binance SOXLUSDT pair.
+
+---
+
 # UZI Market Relay — SOXLUSDT read-only GitHub snapshot
 
 ## 核心方案
@@ -19,7 +28,7 @@ Binance USD-M 公共 REST（无密钥）
 4. 点击 `Actions -> Publish SOXLUSDT public-market snapshot -> Run workflow` 手动测试一次。
 5. 成功时，访问仓库中的 `data/SOXLUSDT.json`，核对 `schema`、`generated_at_utc`、`required_quote_times`、`status_at_publication`、`analysis.technical.1d` 和 `analysis.technical.4h`。
 
-GitHub Actions 按每5分钟设定，但 GitHub可能延迟或跳过计划任务；**绝不能把定时计划等同实时成交行情**。读快照时，如果关键价位源时间已超过15分钟，请显示过期并拒绝当前精确交易信号。
+旧实时 REST 工作流已停止每5分钟的定时请求；历史归档工作流每日尝试更新，但 GitHub可能延迟或跳过计划任务；**绝不能把定时计划等同实时成交行情**。读快照时，如果关键价位源时间已超过15分钟，请显示过期并拒绝当前精确交易信号。
 
 **重要：Github-hosted runner 不保证能访问币安**。若诊断报 HTTP 451/403、DNS 或地区拒绝，停止该采集方案，不得通过代理/其他地区主机规避合规限制。改用在适用地区获授权的数据供应商，或在符合所在地及服务条款的网络使用官方接口。
 

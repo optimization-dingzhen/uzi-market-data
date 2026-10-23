@@ -8,9 +8,6 @@ on:
       - '.github/workflows/publish.yml'
       - 'scripts/**'
       - 'tests/**'
-  schedule:
-    # Every 5 min in UTC; actual execution can be delayed by GitHub Actions.
-    - cron: '3/5 * * * *'
 
 permissions:
   contents: write
