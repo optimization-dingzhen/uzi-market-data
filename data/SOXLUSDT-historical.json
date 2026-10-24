@@ -4,7 +4,7 @@
   "product": "Binance USD-M Futures",
   "source": "Binance Vision official futures UM historical Kline CSV archives",
   "source_archive_root": "https://data.binance.vision/data/futures/um",
-  "generated_at_utc": "2026-10-23T11:40:40+00:00",
+  "generated_at_utc": "2026-10-24T11:02:25+00:00",
   "is_realtime": false,
   "is_archived_lagged_ohlcv": true,
   "status": "historical_only_no_trading_signal",
@@ -13,38 +13,38 @@
       "1d": {
         "available": true,
         "interval": "1d",
-        "bars": 83,
-        "last_closed_bar_open_utc": "2026-10-22T00:00:00+00:00",
-        "last_closed_bar_end_utc": "2026-10-22T23:59:59+00:00",
-        "last_close_usdt": 80.78,
-        "last_bar_high_usdt": 100.62,
-        "last_bar_low_usdt": 80.11,
-        "ema20": 115.35052,
-        "ema50": 125.891,
-        "rsi14": 27.51,
-        "atr14": 12.51154,
+        "bars": 84,
+        "last_closed_bar_open_utc": "2026-10-23T00:00:00+00:00",
+        "last_closed_bar_end_utc": "2026-10-23T23:59:59+00:00",
+        "last_close_usdt": 83.38,
+        "last_bar_high_usdt": 87.9,
+        "last_bar_low_usdt": 78.01,
+        "ema20": 112.30571,
+        "ema50": 124.22391,
+        "rsi14": 29.62,
+        "atr14": 12.32429,
         "recent20_high_usdt": 169.82,
-        "recent20_low_usdt": 80.11,
+        "recent20_low_usdt": 78.01,
         "trend": "down",
-        "age_minutes": 700.77
+        "age_minutes": 662.53
       },
       "4h": {
         "available": true,
         "interval": "4h",
-        "bars": 498,
-        "last_closed_bar_open_utc": "2026-10-22T20:00:00+00:00",
-        "last_closed_bar_end_utc": "2026-10-22T23:59:59+00:00",
-        "last_close_usdt": 80.78,
-        "last_bar_high_usdt": 83.58,
-        "last_bar_low_usdt": 80.11,
-        "ema20": 94.66759,
-        "ema50": 102.25348,
-        "rsi14": 26.89,
-        "atr14": 4.82702,
+        "bars": 504,
+        "last_closed_bar_open_utc": "2026-10-23T20:00:00+00:00",
+        "last_closed_bar_end_utc": "2026-10-23T23:59:59+00:00",
+        "last_close_usdt": 83.38,
+        "last_bar_high_usdt": 84.4,
+        "last_bar_low_usdt": 82.24,
+        "ema20": 90.14881,
+        "ema50": 98.51326,
+        "rsi14": 35.66,
+        "atr14": 4.71707,
         "recent20_high_usdt": 106.91,
-        "recent20_low_usdt": 80.11,
+        "recent20_low_usdt": 78.01,
         "trend": "down",
-        "age_minutes": 700.86
+        "age_minutes": 662.61
       }
     }
   },
@@ -61,12 +61,12 @@
     "options_max_pain"
   ],
   "provenance": {
-    "files_count": 48,
+    "files_count": 50,
     "last_four_archive_urls": [
-      "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-19.zip",
       "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-20.zip",
       "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-21.zip",
-      "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-22.zip"
+      "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-22.zip",
+      "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-23.zip"
     ]
   },
   "warnings": []
