@@ -4,7 +4,7 @@
   "product": "Binance USD-M Futures",
   "source": "Binance Vision official futures UM historical Kline CSV archives",
   "source_archive_root": "https://data.binance.vision/data/futures/um",
-  "generated_at_utc": "2026-10-28T12:56:21+00:00",
+  "generated_at_utc": "2026-10-29T13:02:24+00:00",
   "is_realtime": false,
   "is_archived_lagged_ohlcv": true,
   "status": "historical_only_no_trading_signal",
@@ -26,7 +26,7 @@
         "recent20_high_usdt": 161.41,
         "recent20_low_usdt": 78.01,
         "trend": "down",
-        "age_minutes": 776.5
+        "age_minutes": 2222.54
       },
       "4h": {
         "available": true,
@@ -44,7 +44,7 @@
         "recent20_high_usdt": 102.29,
         "recent20_low_usdt": 81.57,
         "trend": "mixed",
-        "age_minutes": 776.63
+        "age_minutes": 2222.67
       }
     }
   },
@@ -69,5 +69,8 @@
       "https://data.binance.vision/data/futures/um/daily/klines/SOXLUSDT/4h/SOXLUSDT-4h-2026-10-27.zip"
     ]
   },
-  "warnings": []
+  "warnings": [
+    "archive_not_yet_available: 2026-10-28 (1d)",
+    "archive_not_yet_available: 2026-10-28 (4h)"
+  ]
 }
