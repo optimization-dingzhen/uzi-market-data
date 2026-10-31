@@ -3,7 +3,7 @@
   "exchange": "OKX",
   "symbol": "SOXL-USDT-SWAP",
   "market_type": "USDT-margined equity-linked perpetual SWAP, not Binance futures or SOXL ETF shares",
-  "generated_at_utc": "2026-10-31T02:26:03+00:00",
+  "generated_at_utc": "2026-10-31T02:30:45+00:00",
   "status": "live_verified_quotes",
   "source": {
     "api_base": "https://us.okx.com",
@@ -27,28 +27,42 @@
   },
   "market": {
     "last_price_usdt": 77.72,
-    "mark_price_usdt": 77.71,
+    "mark_price_usdt": 77.72,
     "bid_usdt": 77.71,
     "ask_usdt": 77.72,
     "spread_bps": 1.29,
-    "last_quote_time_utc": "2026-10-31T02:26:02+00:00",
-    "mark_quote_time_utc": "2026-10-31T02:26:03+00:00",
-    "last_quote_age_minutes": 0.02,
+    "last_quote_time_utc": "2026-10-31T02:30:42+00:00",
+    "mark_quote_time_utc": "2026-10-31T02:30:44+00:00",
+    "last_quote_age_minutes": 0.05,
     "mark_quote_age_minutes": 0.01,
     "high_24h": 88.17,
     "low_24h": 70.43,
-    "base_volume_24h": 8505009.75,
-    "contracts_volume_24h": 8505009.75
+    "base_volume_24h": 8497932.13,
+    "contracts_volume_24h": 8497932.13
   },
   "derivatives": {
-    "oi_contracts": 668055.4899999999,
-    "oi_base_equivalent": 668055.4899999999,
-    "oi_usd": 51901231.01809999,
-    "oi_as_of_utc": "2026-10-31T02:26:03+00:00",
+    "oi_contracts": 667643.7099999998,
+    "oi_base_equivalent": 667643.7099999998,
+    "oi_usd": 51869239.82989999,
+    "oi_as_of_utc": "2026-10-31T02:30:44+00:00",
     "oi_change_4h_pct": null,
     "oi_change_1d_pct": null,
+    "oi_change_diagnostics": {
+      "4h": {
+        "reference_time_utc": "2026-10-30T23:13:25+00:00",
+        "reference_distance_minutes": 42.68,
+        "max_reference_distance_minutes": 20,
+        "reason_if_unavailable": "reference_outside_20m_tolerance"
+      },
+      "1d": {
+        "reference_time_utc": "2026-10-30T01:44:55+00:00",
+        "reference_distance_minutes": 45.83,
+        "max_reference_distance_minutes": 20,
+        "reason_if_unavailable": "reference_outside_20m_tolerance"
+      }
+    },
     "funding_rate_pct": 0.0,
-    "funding_api_record_utc": "2026-10-31T02:24:13+00:00",
+    "funding_api_record_utc": "2026-10-31T02:27:07+00:00",
     "funding_time_utc": "2026-10-31T08:00:00+00:00",
     "next_funding_time_utc": "2026-10-31T16:00:00+00:00"
   },
@@ -73,7 +87,7 @@
       "recent20_high": 109.17,
       "recent20_low": 70.43,
       "trend": "down",
-      "bar_age_minutes": 146.06
+      "bar_age_minutes": 150.76
     },
     "1d": {
       "timeframe": "1d",
@@ -95,7 +109,7 @@
       "recent20_high": 143.29,
       "recent20_low": 70.43,
       "trend": "down",
-      "bar_age_minutes": 146.06
+      "bar_age_minutes": 150.76
     }
   },
   "oi_history": [
@@ -158,6 +172,10 @@
     {
       "ts_ms": 1793413563228,
       "oi_usd": 51901231.02
+    },
+    {
+      "ts_ms": 1793413844959,
+      "oi_usd": 51869239.83
     }
   ],
   "warnings": [],
