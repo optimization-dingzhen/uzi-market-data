@@ -213,6 +213,28 @@ def oi_changes(previous: dict[str, Any] | None, current_usd: float | None, curre
     return samples, changes
 
 
+def oi_sample_diagnostics(samples: list[dict[str, Any]], current_ts: float | None) -> dict[str, Any]:
+    """Expose reference-sample distance instead of silently fabricating OI changes."""
+    details = {}
+    for label, period in (("4h", 4*3600000), ("1d", 24*3600000)):
+        target = current_ts - period if current_ts is not None else None
+        # Exclude the current measurement as a historical reference.
+        earlier = [sample for sample in samples if target is not None and sample["ts_ms"] < current_ts]
+        candidate = min(earlier, key=lambda x: abs(x["ts_ms"] - target)) if earlier else None
+        delta = abs(candidate["ts_ms"] - target)/60000 if candidate is not None else None
+        details[label] = {
+            "reference_time_utc": iso_ms(candidate["ts_ms"]) if candidate is not None else None,
+            "reference_distance_minutes": round_value(delta, 2),
+            "max_reference_distance_minutes": 20,
+            "reason_if_unavailable": (
+                "current_oi_missing" if current_ts is None else
+                "no_historical_sample" if candidate is None else
+                "reference_outside_20m_tolerance" if delta > 20 else None
+            ),
+        }
+    return details
+
+
 def build_snapshot(raw: dict[str, Any], previous: dict[str, Any] | None = None,
                    now_ms: float | None = None, max_quote_age_minutes: float = 15) -> dict[str, Any]:
     if now_ms is None:
@@ -255,6 +277,7 @@ def build_snapshot(raw: dict[str, Any], previous: dict[str, Any] | None = None,
     if not funding:
         warning.append("OKX funding rate unavailable")
     samples, changes = oi_changes(previous, oi_usd, oi_ts, now_ms)
+    oi_diagnostics = oi_sample_diagnostics(samples, oi_ts)
     bid, ask = numeric(ticker.get("bidPx")), numeric(ticker.get("askPx"))
     spread_bps = 10000*(ask-bid)/((ask+bid)/2) if bid and ask and ask>=bid else None
     rate = numeric(funding.get("fundingRate"))
@@ -286,6 +309,7 @@ def build_snapshot(raw: dict[str, Any], previous: dict[str, Any] | None = None,
             "oi_as_of_utc": iso_ms(oi_ts),
             "oi_change_4h_pct": changes["4h"],
             "oi_change_1d_pct": changes["1d"],
+            "oi_change_diagnostics": oi_diagnostics,
             "funding_rate_pct": round_value(rate*100 if rate is not None else None, 6),
             "funding_api_record_utc": iso_ms(funding.get("ts")),
             "funding_time_utc": iso_ms(funding.get("fundingTime")),
