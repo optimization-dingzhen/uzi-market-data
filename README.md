@@ -75,6 +75,6 @@ required_quote_times、generated_at_utc、status_at_publication，
 
 ## Verified OKX near-real-time SOXL perpetual data (2026-10-23)
 
-The independent OKX market-data publisher reads `SOXL-USDT-SWAP` (not Binance SOXLUSDT), collects quotes, mark, funding, OI, 4H and UTC 1D candles, and publishes `data/OKX-SOXL-USDT-SWAP.json` on a five-minute requested GitHub Actions schedule. Actual GitHub timing may vary. Readers must check quote ages (<15 minutes) and exchange identity. Do not mistake OKX OI/funding for Binance numbers.
+The independent OKX market-data publisher reads `SOXL-USDT-SWAP` (not Binance SOXLUSDT), collects quotes, mark, funding, OI, 4H and UTC 1D candles. The **primary trigger** is a one-shot, SHA-checked `data/refresh-request.txt` update at the start of **each hourly ChatGPT analysis**; GitHub Actions also attempts **one best-effort backup run per hour** (UTC :53), not every five minutes. After matching the refresh request to a successful `push` run, the reader must re-fetch `data/OKX-SOXL-USDT-SWAP.json` and verify exchange, new generation timestamp and last/mark quote times (<15 minutes at read time). GitHub scheduling may delay or skip jobs. Do not mistake OKX OI/funding for Binance numbers; missing OI changes remain null.
 
 See [OKX live data guide](docs/OKX-LIVE.md) for tested endpoints, regional service conditions and ChatGPT Web project instructions. [Official delayed Binance history](data/SOXLUSDT-historical.json) is preserved as a separate source.

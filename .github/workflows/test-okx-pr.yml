@@ -1,0 +1,55 @@
+name: Test OKX PR without publishing
+
+on:
+  push:
+    branches:
+      - fix/okx-on-demand-freshness-20261031
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Full offline regression suite
+        run: python -m unittest discover -s tests -v
+      - name: Read-only live OKX collection smoke test (does not push)
+        run: |
+          python scripts/publish_okx.py --output data/OKX-SOXL-USDT-SWAP.json
+          python scripts/verify_okx.py --file data/OKX-SOXL-USDT-SWAP.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('data/OKX-SOXL-USDT-SWAP.json').read_text(encoding='utf-8'))
+          assert report['exchange'] == 'OKX'
+          assert report['symbol'] == 'SOXL-USDT-SWAP'
+          assert 'oi_change_diagnostics' in report['derivatives']
+          print('PASS: live OKX collection, technical fields and verification; no publication')
+          PY
+      - name: Deterministic stale snapshot rejection
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timedelta
+          from pathlib import Path
+          from scripts.verify_okx import verify
+
+          payload = json.loads(Path('data/OKX-SOXL-USDT-SWAP.json').read_text(encoding='utf-8'))
+          published = datetime.fromisoformat(payload['generated_at_utc'].replace('Z', '+00:00'))
+          result = verify(payload, now=published + timedelta(minutes=16))
+          assert not result['usable_for_current_1d_4h_analysis'], result
+          assert 'generation_missing_future_or_stale' in result['errors'], result
+          print('PASS: stale published snapshot rejected independently of cached quote age')
+          PY

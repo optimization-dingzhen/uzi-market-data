@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 from datetime import datetime, timezone
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from publish_okx import build_snapshot, parse_bars, oi_changes, SYMBOL
+from publish_okx import build_snapshot, parse_bars, oi_changes, oi_sample_diagnostics, SYMBOL
 
 class TestOKX(unittest.TestCase):
     def sample(self):
@@ -70,6 +70,19 @@ class TestOKX(unittest.TestCase):
         now,snap=self.sample()
         result=build_snapshot(snap,previous={"exchange":"Binance","symbol":SYMBOL,"oi_history":[{"ts_ms":now-4*3600000,"oi_usd":400000}]},now_ms=now)
         self.assertIsNone(result["derivatives"]["oi_change_4h_pct"])
+    def test_oi_reference_gap_is_reported(self):
+        now, snap = self.sample()
+        prev = {"exchange": "OKX", "symbol": SYMBOL, "oi_history": [
+            {"ts_ms": now-4*3600000+26*60000, "oi_usd": 400000},
+            {"ts_ms": now-24*3600000-75*60000, "oi_usd": 300000},
+        ]}
+        result = build_snapshot(snap, previous=prev, now_ms=now)
+        diagnostics = result["derivatives"]["oi_change_diagnostics"]
+        self.assertIsNone(result["derivatives"]["oi_change_4h_pct"])
+        self.assertIsNone(result["derivatives"]["oi_change_1d_pct"])
+        self.assertEqual(diagnostics["4h"]["reason_if_unavailable"], "reference_outside_20m_tolerance")
+        self.assertEqual(diagnostics["1d"]["reason_if_unavailable"], "reference_outside_20m_tolerance")
+
     def test_funding_missing_visible(self):
         now,snap=self.sample()
         snap.pop("funding_rate")
