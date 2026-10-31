@@ -50,3 +50,57 @@ OKX exchange announcement: https://www.okx.com/en-us/help/okx-to-list-perpetual-
 OKX API guide: https://www.okx.com/docs-v5/en/
 
 Only use the API when authorized for the jurisdiction of the executing environment and consistent with OKX data licensing/terms. Do not reroute requests around an explicit region-based service restriction.
+
+
+## Read-time verification (2026-10-31)
+
+Before using an OKX snapshot for analysis, validate at the **current UTC**:
+\`python scripts/verify_okx.py --file data/OKX-SOXL-USDT-SWAP.json\`.
+Exit code 0 means OKX quote/mark provenance, snapshot generation time, and
+confirmed 1d/4h candle recency passed. Exit code 2 means **not usable as a
+current market signal**. Published \`last_quote_age_minutes\` values are not
+read-time ages, and \`status: live_verified_quotes\` is not perpetual freshness.
+
+In ChatGPT, re-read the file after any refresh. The exact exchange timestamps
+must all pass the 15-minute quote/generation checks at the moment of analysis.
+Analysis order: **1d trend first, then 4h structure and overbought/oversold
+conditions**. Use EMA20/EMA50, RSI14, Bollinger bands and ATR; do not infer a
+Binance price, mark, OI, or funding rate from OKX. Missing OKX OI 4h/1d changes
+must remain \`null\` with explanation, not interpolation presented as truth.
+
+The on-demand path is:
+1. Read and reject stale snapshot; record request start UTC.
+2. If authorized, update \`data/refresh-request.txt\` with a distinct timestamp
+   using its current blob SHA. This causes a \`push\` event on main.
+3. Identify the resulting workflow run by **triggering commit SHA** and
+   \`event=push\`, not merely "latest successful run." Poll the run to completion.
+4. Require success, then fetch the JSON again, ensure \`generated_at_utc\` is
+   after the request start, and recompute last/mark/generation ages against
+   the current UTC. Do not assume a push commit itself generated fresh data.
+5. On timeout, missing or failed run, quote staleness, missing provenance, or
+   stale confirmed candles: fail closed and present historical information only.
+
+This trigger involves GitHub scheduling, runner availability, fetching OKX,
+committing the result, and connector read latency. It has **no bounded
+completion time** and cannot guarantee real-time execution.
+
+OI changes use a nearest historical sample within +/-20 minutes of the
+target time. \`derivatives.oi_change_diagnostics\` now reports the reference
+timestamp, temporal distance, and unavailable reason for each horizon. The
+publisher stores only its own observations, not an official OKX historical OI
+series. A reliable near-continuous OI history requires a separately authorized
+persistent sampler/data vendor; do not loosen tolerance simply to fill nulls.
+
+## Acceptance checks
+
+- \`python -m unittest discover -s tests -v\` passes offline.
+- \`python scripts/verify_okx.py --file data/OKX-SOXL-USDT-SWAP.json\`
+  returns 2 on a stale repository snapshot, even if the snapshot's stored
+  \`last_quote_age_minutes\` equals zero.
+- Wrong venue, symbol, source, or 1d/4h candle data is rejected.
+- A successful freshly generated snapshot passes verification in its run.
+- Missing OI changes remain null; diagnostics explain nearest timestamp gap.
+- A refresh-request push produces a matching, completed, successful workflow
+  and a **newer** generated_at_utc; else ChatGPT clearly reports failure.
+- Observe actual schedule run creation over 24 hours; GitHub scheduled events
+  are best-effort, not proof of a five-minute freshness SLA.
