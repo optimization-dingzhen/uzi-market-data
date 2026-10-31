@@ -93,6 +93,13 @@ class TestOKXReadTimeVerification(unittest.TestCase):
         report["market"]["last_quote_time_utc"] = timestamp(-5)
         self.assertIn("last_quote_missing_future_or_stale", verify(report, NOW)["errors"])
 
+    def test_hourly_backup_and_on_demand_push_are_both_configured(self):
+        workflow_path = Path(__file__).resolve().parents[1] / ".github/workflows/publish-okx.yml"
+        workflow = workflow_path.read_text(encoding="utf-8")
+        self.assertIn("- cron: '53 * * * *'", workflow)
+        self.assertIn("- 'data/refresh-request.txt'", workflow)
+        self.assertNotIn("2-59/5 * * * *", workflow)
+
     def test_null_oi_is_warning_not_fabricated(self):
         report = fixture()
         report["derivatives"]["oi_as_of_utc"] = None
