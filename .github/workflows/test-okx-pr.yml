@@ -25,6 +25,19 @@ jobs:
           python-version: '3.11'
       - name: Full offline regression suite
         run: python -m unittest discover -s tests -v
+      - name: Read-only live OKX collection smoke test (does not push)
+        run: |
+          python scripts/publish_okx.py --output data/OKX-SOXL-USDT-SWAP.json
+          python scripts/verify_okx.py --file data/OKX-SOXL-USDT-SWAP.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('data/OKX-SOXL-USDT-SWAP.json').read_text(encoding='utf-8'))
+          assert report['exchange'] == 'OKX'
+          assert report['symbol'] == 'SOXL-USDT-SWAP'
+          assert 'oi_change_diagnostics' in report['derivatives']
+          print('PASS: live OKX collection, technical fields and verification; no publication')
+          PY
       - name: Deterministic stale snapshot rejection
         run: |
           python - <<'PY'
