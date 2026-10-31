@@ -8,6 +8,8 @@ on:
       - '.github/workflows/publish-okx.yml'
       - 'scripts/publish_okx.py'
       - 'tests/test_okx.py'
+      - 'tests/test_verify_okx.py'
+      - 'scripts/verify_okx.py'
       - 'data/refresh-request.txt'
   schedule:
     # Request at minutes 2,7,12... to avoid top-of-hour load. GitHub may delay/skip jobs.
@@ -53,6 +55,8 @@ jobs:
           assert report['technical']['1d']['bar_count']>=51
           print('Verified OKX quote and 1D/4H data at',datetime.now(timezone.utc).isoformat())
           PY
+      - name: Verify OKX read-time schema and provenance before publication
+        run: python scripts/verify_okx.py --file data/OKX-SOXL-USDT-SWAP.json
       - name: Publish snapshot to repository (public market data only)
         run: |
           git config user.name 'github-actions[bot]'
