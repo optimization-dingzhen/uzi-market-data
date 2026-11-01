@@ -3,7 +3,7 @@
   "exchange": "OKX",
   "symbol": "SOXL-USDT-SWAP",
   "market_type": "USDT-margined equity-linked perpetual SWAP, not Binance futures or SOXL ETF shares",
-  "generated_at_utc": "2026-11-01T19:54:55+00:00",
+  "generated_at_utc": "2026-11-01T23:57:58+00:00",
   "status": "live_verified_quotes",
   "source": {
     "api_base": "https://us.okx.com",
@@ -26,43 +26,43 @@
     "ctValCcy": "SOXL"
   },
   "market": {
-    "last_price_usdt": 77.93,
-    "mark_price_usdt": 77.92,
-    "bid_usdt": 77.92,
-    "ask_usdt": 77.93,
-    "spread_bps": 1.28,
-    "last_quote_time_utc": "2026-11-01T19:54:52+00:00",
-    "mark_quote_time_utc": "2026-11-01T19:54:54+00:00",
+    "last_price_usdt": 79.65,
+    "mark_price_usdt": 79.64,
+    "bid_usdt": 79.65,
+    "ask_usdt": 79.66,
+    "spread_bps": 1.26,
+    "last_quote_time_utc": "2026-11-01T23:57:55+00:00",
+    "mark_quote_time_utc": "2026-11-01T23:57:57+00:00",
     "last_quote_age_minutes": 0.05,
     "mark_quote_age_minutes": 0.01,
-    "high_24h": 79.55,
-    "low_24h": 77.17,
-    "base_volume_24h": 469573.72,
-    "contracts_volume_24h": 469573.72
+    "high_24h": 80.3,
+    "low_24h": 77.3,
+    "base_volume_24h": 657025.86,
+    "contracts_volume_24h": 657025.86
   },
   "derivatives": {
-    "oi_contracts": 674972.9899999996,
-    "oi_base_equivalent": 674972.9899999996,
-    "oi_usd": 52593895.38079997,
-    "oi_as_of_utc": "2026-11-01T19:54:54+00:00",
-    "oi_change_4h_pct": null,
-    "oi_change_1d_pct": 3.602,
+    "oi_contracts": 687681.2699999998,
+    "oi_base_equivalent": 687681.2699999998,
+    "oi_usd": 54766936.342799984,
+    "oi_as_of_utc": "2026-11-01T23:57:57+00:00",
+    "oi_change_4h_pct": 4.132,
+    "oi_change_1d_pct": null,
     "oi_change_diagnostics": {
       "4h": {
-        "reference_time_utc": "2026-11-01T15:29:51+00:00",
-        "reference_distance_minutes": 25.04,
-        "max_reference_distance_minutes": 20,
-        "reason_if_unavailable": "reference_outside_20m_tolerance"
-      },
-      "1d": {
-        "reference_time_utc": "2026-10-31T19:35:58+00:00",
-        "reference_distance_minutes": 18.94,
+        "reference_time_utc": "2026-11-01T19:54:54+00:00",
+        "reference_distance_minutes": 3.05,
         "max_reference_distance_minutes": 20,
         "reason_if_unavailable": null
+      },
+      "1d": {
+        "reference_time_utc": "2026-10-31T22:52:01+00:00",
+        "reference_distance_minutes": 65.94,
+        "max_reference_distance_minutes": 20,
+        "reason_if_unavailable": "reference_outside_20m_tolerance"
       }
     },
-    "funding_rate_pct": -0.091685,
-    "funding_api_record_utc": "2026-11-01T19:51:26+00:00",
+    "funding_rate_pct": 0.061542,
+    "funding_api_record_utc": "2026-11-01T23:53:18+00:00",
     "funding_time_utc": "2026-11-02T00:00:00+00:00",
     "next_funding_time_utc": "2026-11-02T08:00:00+00:00"
   },
@@ -72,22 +72,22 @@
       "ohlc_source": "OKX trade candles, confirmed closes only",
       "bar_timezone": "UTC",
       "bar_count": 119,
-      "last_closed_bar_open_utc": "2026-11-01T12:00:00+00:00",
-      "last_closed_bar_end_utc": "2026-11-01T15:59:59+00:00",
-      "last_close": 78.73,
-      "ema20": 82.4832,
-      "ema50": 87.83446,
-      "rsi14": 36.0,
-      "atr14": 2.9595,
+      "last_closed_bar_open_utc": "2026-11-01T16:00:00+00:00",
+      "last_closed_bar_end_utc": "2026-11-01T19:59:59+00:00",
+      "last_close": 77.9,
+      "ema20": 82.04671,
+      "ema50": 87.41812,
+      "rsi14": 34.54,
+      "atr14": 2.84238,
       "bollinger20": {
-        "mid": 83.1965,
-        "upper": 101.00168,
-        "lower": 65.39132
+        "mid": 82.064,
+        "upper": 98.10382,
+        "lower": 66.02418
       },
       "recent20_high": 105.51,
       "recent20_low": 70.43,
       "trend": "down",
-      "bar_age_minutes": 234.92
+      "bar_age_minutes": 237.97
     },
     "1d": {
       "timeframe": "1d",
@@ -109,14 +109,10 @@
       "recent20_high": 143.23,
       "recent20_low": 70.43,
       "trend": "down",
-      "bar_age_minutes": 1194.92
+      "bar_age_minutes": 1437.97
     }
   },
   "oi_history": [
-    {
-      "ts_ms": 1793311100826,
-      "oi_usd": 46239769.28
-    },
     {
       "ts_ms": 1793324695097,
       "oi_usd": 50268708.36
@@ -184,6 +180,10 @@
     {
       "ts_ms": 1793562894425,
       "oi_usd": 52593895.38
+    },
+    {
+      "ts_ms": 1793577477530,
+      "oi_usd": 54766936.34
     }
   ],
   "warnings": [],
